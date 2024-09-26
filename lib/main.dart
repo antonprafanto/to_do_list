@@ -1,20 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_list/models/save_task.dart';
+import 'package:to_do_list/screens/add_todo.dart';
+import 'package:to_do_list/screens/todo_list.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => SaveTask(),
+      child: const MyApp(),
+    ),
+  );
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MaterialApp(
+      title: 'To-Do List',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.dark,
       ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const TodoList(),
+        '/add-todo-screen': (context) => AddTodo(),
+      },
     );
   }
 }
